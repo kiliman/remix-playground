@@ -22,13 +22,13 @@ The _entry.server_ response has been updated to check the resulting markup to de
 index.tsx   => layout for default/index app
 index/      => folder containing routes for the index app
   index.tsx => content for index page GET /
-  about.txx => content for about page GET /about
+  about.tsx => content for about page GET /about
 
 app2/         => folder for app2 instance
   index.tsx   => layout for app2 instance
   index/      => folder containing routes for the app2 app
     index.tsx => content for index page GET /app2
-    about.txx => content for about page GET /app2/about
+    about.tsx => content for about page GET /app2/about
 
 standalone.tsx => does not use layout
 json.tsx       => return JSON (see headers)
