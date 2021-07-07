@@ -1,4 +1,8 @@
-GET http://localhost:3000/json HTTP/1.1
+GET http://localhost:3000/json?format=json HTTP/1.1
+###
+GET http://localhost:3000/parent?format=json HTTP/1.1
+###
+GET http://localhost:3000/parent/child?format=json HTTP/1.1
 ###
 GET http://localhost:3000/standalone HTTP/1.1
 ###
