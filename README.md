@@ -1,5 +1,7 @@
 # Remix multi-app
 
+[View Demo](https://remix-multi-app.herokuapp.com/)
+
 This project shows how to mount multiple "apps" in a single instance.
 
 The _root_ route has been changed to simply export a single `<Outlet/>`.
