@@ -12,7 +12,17 @@ There is also an _app2_ app that has the same structure as the default app. It c
 
 This example also shows how to create standalone pages (ones that uses its own layout) as well as an endpoint for raw JSON.
 
-NOTE: The _json_ endpoint returns the `content-type: application/json` header. The default export returns the JSON object. You must use `JSON.stringify()` as React does not support returning an object.
+## JSON support
+
+Wrap your route in a `Json` component and your route will return a JSON response if querystring `format=json` is present, otherwise it will return the `children` as normal.
+
+If you have nested routes, you can add `includeParent` to return all JSON results.
+
+You can add a Remix route `handle` with value `jsonRoot: true` to denote root of JSON results, otherwise it will go all the way up to your root route.
+
+For JSON routes, make sure you return the header `Content-Type: application/json`.
+
+See `/app/routes/index/parent.tsx` and `/app/routes/index/parent/child.tsx`
 
 The _entry.server_ response has been updated to check the resulting markup to determine if it's HTML or JSON content. It will convert it back to a proper JSON result, since React will HTML encode the entities. `{&quot;abc&quot;:123}`
 

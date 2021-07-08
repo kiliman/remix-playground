@@ -34,7 +34,7 @@ function Document({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   let data = useRouteData()
-  let params = new URLSearchParams(useLocation().search)
+  let [params] = useSearchParams()
   if (params.get('format') === 'json') {
     return <Outlet />
   }

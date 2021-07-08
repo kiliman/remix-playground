@@ -1,7 +1,11 @@
-import { useLocation } from 'react-router-dom'
-import type { LinksFunction, LoaderFunction } from 'remix'
-import { Meta, Links, Scripts, useRouteData, LiveReload } from 'remix'
+import { LoaderFunction } from 'remix'
+import { useRouteData } from 'remix'
 import { Outlet } from '../../components/Outlet'
+import Json from '../../components/Json'
+
+export let handle = {
+  jsonRoot: true,
+}
 
 export function headers() {
   return {
@@ -12,13 +16,14 @@ export let loader: LoaderFunction = async () => {
   return { parent: { name: 'parent' } }
 }
 export default function Parent() {
-  console.log('parent')
   const data = useRouteData()
-  const { pathname } = useLocation()
-  // HACK: if requesting parent return JSON directly
-  // otherwise return <Outlet/> to gather up child data
-  if (pathname === '/parent') {
-    return JSON.stringify(data)
-  }
-  return <Outlet data={data} />
+  console.log('parent')
+
+  return (
+    <Json>
+      <h2>Parent</h2>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <Outlet />
+    </Json>
+  )
 }

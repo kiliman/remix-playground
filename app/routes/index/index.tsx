@@ -20,24 +20,40 @@ export default function Index() {
   let data = useRouteData()
 
   return (
-    <div style={{ textAlign: 'center', padding: 20 }}>
+    <div style={{ padding: 20 }}>
       <h2>Welcome to Default/Index App!</h2>
       <p>
         <a href="https://remix.run/dashboard/docs">Check out the docs</a> to get
         started.
       </p>
-      <p>
-        <Link to="about">About Default/Index App</Link>
-      </p>
-      <p>
-        <Link to="app2">Go to App 2</Link>
-      </p>
-      <p>
-        <a href="standalone">Go to standalone</a>
-      </p>
-      <p>
-        <a href="json">Get JSON</a>
-      </p>
+      <ul>
+        <li>
+          <Link to="about">About Default/Index App</Link>
+        </li>
+        <li>
+          <Link to="app2">Go to App 2</Link>
+        </li>
+        <li>
+          <a href="standalone">Go to standalone</a>
+        </li>
+        <li>
+          <a href="parent">Get Parent (HTML)</a>
+        </li>
+        <li>
+          <a href="parent/child">Get Parent/Child (HTML)</a>
+        </li>
+        <li>
+          <a href="parent?format=json">Get Parent (JSON)</a>
+        </li>
+        <li>
+          <a href="parent/child?format=json">Get Child (JSON)</a>
+        </li>
+        <li>
+          <a href="parent/child?format=json&includeParent">
+            Get Parent/Child (JSON)
+          </a>
+        </li>
+      </ul>
       <p>Message from the loader: {data.message}</p>
     </div>
   )
