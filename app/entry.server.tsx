@@ -12,20 +12,25 @@ export default function handleRequest(
     <RemixServer context={remixContext} url={request.url} />,
   )
 
+  const { searchParams } = new URL(request.url)
   const isHtml = markup.startsWith('<')
-  const isJson = responseHeaders.get('content-type') === 'application/json'
+  const isJson =
+    responseHeaders.get('content-type') === 'application/json' ||
+    searchParams.get('format') === 'json'
   let prefix = ''
+  let contentType = 'text/html'
   if (isHtml) {
     prefix = '<!DOCTYPE html>'
   } else if (isJson) {
     markup = replaceHtmlEntities(markup)
+    contentType = 'application/json'
   }
 
   return new Response(prefix + markup, {
     status: responseStatusCode,
     headers: {
       ...Object.fromEntries(responseHeaders),
-      ...(isHtml ? { 'Content-Type': 'text/html' } : {}),
+      'Content-Type': contentType,
     },
   })
 }

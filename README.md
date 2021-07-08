@@ -20,11 +20,9 @@ If you have nested routes, you can add `includeParent` to return all JSON result
 
 You can add a Remix route `handle` with value `jsonRoot: true` to denote root of JSON results, otherwise it will go all the way up to your root route.
 
-For JSON routes, make sure you return the header `Content-Type: application/json`.
-
 See `/app/routes/index/parent.tsx` and `/app/routes/index/parent/child.tsx`
 
-The _entry.server_ response has been updated to check the resulting markup to determine if it's HTML or JSON content. It will convert it back to a proper JSON result, since React will HTML encode the entities. `{&quot;abc&quot;:123}`
+The _entry.server_ response has been updated to check the resulting markup to determine if it's HTML or JSON content. It will convert it back to a proper JSON result, since React will HTML encode the entities. `{&quot;abc&quot;:123}`. It will set the proper `content-type` header if `format=json`.
 
 ## Under /app/routes:
 

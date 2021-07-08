@@ -7,11 +7,6 @@ export let handle = {
   jsonRoot: true,
 }
 
-export function headers() {
-  return {
-    'Content-Type': 'application/json',
-  }
-}
 export let loader: LoaderFunction = async () => {
   return { parent: { name: 'parent' } }
 }
