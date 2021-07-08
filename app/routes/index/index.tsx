@@ -54,6 +54,7 @@ export default function Index() {
           </a>
         </li>
       </ul>
+      <a href="https://github.com/kiliman/remix-multi-app">Get it on GitHub</a>
       <p>Message from the loader: {data.message}</p>
     </div>
   )
