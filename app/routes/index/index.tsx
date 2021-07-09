@@ -43,6 +43,11 @@ export default function Index() {
           <a href="parent/child">Get Parent/Child (HTML)</a>
         </li>
         <li>
+          <a href="parent/child/grandchild">
+            Get Parent/Child/Grandchild (HTML)
+          </a>
+        </li>
+        <li>
           <a href="parent?format=json">Get Parent (JSON)</a>
         </li>
         <li>
@@ -51,6 +56,11 @@ export default function Index() {
         <li>
           <a href="parent/child?format=json&includeParent">
             Get Parent/Child (JSON)
+          </a>
+        </li>
+        <li>
+          <a href="parent/child/grandchild?format=json&includeParent&jsonType=keyed">
+            Get Parent/Child/Grandchild (JSON type=keyed)
           </a>
         </li>
       </ul>

@@ -1,6 +1,6 @@
+import { Outlet } from 'react-router-dom'
 import { LoaderFunction } from 'remix'
 import { useRouteData } from 'remix'
-import { Outlet } from '../../components/Outlet'
 import Json from '../../components/Json'
 
 export let handle = {
@@ -15,7 +15,7 @@ export default function Parent() {
   console.log('parent')
 
   return (
-    <Json>
+    <Json type="spread">
       <h2>Parent</h2>
       <pre>{JSON.stringify(data, null, 2)}</pre>
       <Outlet />

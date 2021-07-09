@@ -1,18 +1,16 @@
-import { Outlet } from 'react-router-dom'
 import { LoaderFunction } from 'remix'
 import { useRouteData } from 'remix'
-import Json from '../../../components/Json'
+import Json from '../../../../components/Json'
 
 export let loader: LoaderFunction = async () => {
-  return { child: { name: 'child' } }
+  return { grandchild: { name: 'grandchild' } }
 }
-export default function Child() {
+export default function Grandchild() {
   const data = useRouteData()
   return (
     <Json>
-      <h3>Child</h3>
+      <h4>Grandchild</h4>
       <pre>{JSON.stringify(data, null, 2)}</pre>
-      <Outlet />
     </Json>
   )
 }
