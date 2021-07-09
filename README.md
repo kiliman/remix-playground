@@ -20,6 +20,37 @@ Wrap your route in a `Json` component and your route will return a JSON response
 
 If you have nested routes, you can add `includeParent` to return all JSON results.
 
+There is a new `type` property to specify how to generate the JSON result. Values are:
+
+- `spread`: loader data is spread into result from parent to child (default)
+
+```json
+{
+  "parent": {...},
+  "child": {...}
+}
+```
+
+- `keyed`: result uses route pathnames as keys with data as value
+
+```json
+{
+  "/parent/": {"parent": {...}},
+  "/parent/child": {"child": {...}}
+}
+```
+
+- `array`: result is returned as JSON array with loader data as values in order from parent to child
+
+```json
+[
+  {"parent": {...}},
+  {"child": {...}}
+]
+```
+
+You can override the specified `type` property by adding `jsonType=spread|keyed|array` to the querystring.
+
 You can add a Remix route `handle` with value `jsonRoot: true` to denote root of JSON results, otherwise it will go all the way up to your root route.
 
 See `/app/routes/index/parent.tsx` and `/app/routes/index/parent/child.tsx`
