@@ -26,6 +26,14 @@ export default function Index() {
         <a href="https://remix.run/dashboard/docs">Check out the docs</a> to get
         started.
       </p>
+
+      <h3>Show X-Remix-Navigation-Id header support</h3>
+      <p>
+        You should see the header in the Network tab for 3 loader call. Then
+        click on the Grandchild2 link to see child navigation.
+      </p>
+      <Link to="parent/child/grandchild">Get Parent/Child/Grandchild</Link>
+      <h3>Multi-App and JSON support</h3>
       <ul>
         <li>
           <Link to="about">About Default/Index App</Link>
