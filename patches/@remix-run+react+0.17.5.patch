@@ -1,0 +1,87 @@
+diff --git a/node_modules/@remix-run/react/browser/components.js b/node_modules/@remix-run/react/browser/components.js
+index a7a7316..81565b8 100644
+--- a/node_modules/@remix-run/react/browser/components.js
++++ b/node_modules/@remix-run/react/browser/components.js
+@@ -93,6 +93,7 @@ function RemixEntry({
+   React.useEffect(() => {
+     if (location === nextLocation) return;
+     let isCurrent = true;
++    let navId = Date.now();
+ 
+     (async () => {
+       let nextMatches = matchClientRoutes(clientRoutes, nextLocation);
+@@ -131,7 +132,7 @@ function RemixEntry({
+           throw new Error(`Route "${leafRoute.id}" does not have an action handler, but you are trying ` + `to submit to it. To fix this, please add an \`action\` function to the ` + `route module.`);
+         }
+ 
+-        let response = await fetchData(nextLocation, leafRoute.id, pendingFormSubmit);
++        let response = await fetchData(nextLocation, leafRoute.id, pendingFormSubmit, `${navId}/1`);
+ 
+         if (response instanceof Error) {
+           componentDidCatchEmulator.error = response;
+@@ -162,11 +163,18 @@ function RemixEntry({
+           matches[index].params["*"] !== match.params["*"]
+         );
+       });
++      // HACK to get fetch count
++      let fetchCount = matchesToLoad.filter(match => {
++        let routeId = match.route.id;
++        let route = manifest.routes[routeId]; // get data and module in parallel
++        return route.hasLoader
++      }).length;
++
+       let transitionResults = await Promise.all(matchesToLoad.map(async match => {
+         let routeId = match.route.id;
+         let route = manifest.routes[routeId]; // get data and module in parallel
+ 
+-        let [dataResult, routeModule] = await Promise.all([route.hasLoader ? fetchData(nextLocation, route.id) : undefined, loadRouteModule(route, routeModules)]); // don't waste time w/ links for routes that won't render
++        let [dataResult, routeModule] = await Promise.all([route.hasLoader ? fetchData(nextLocation, route.id, undefined, `${navId}/${fetchCount}`) : undefined, loadRouteModule(route, routeModules)]); // don't waste time w/ links for routes that won't render
+ 
+         if (isRedirectResponse(dataResult) || dataResult instanceof Error || routeModule == null // how?
+         ) {
+diff --git a/node_modules/@remix-run/react/browser/data.js b/node_modules/@remix-run/react/browser/data.js
+index a7e22a9..8ece420 100644
+--- a/node_modules/@remix-run/react/browser/data.js
++++ b/node_modules/@remix-run/react/browser/data.js
+@@ -5,13 +5,13 @@ function isErrorResponse(response) {
+ function isRedirectResponse(response) {
+   return response instanceof Response && response.headers.get("X-Remix-Redirect") != null;
+ }
+-async function fetchData(location, routeId, formSubmit) {
++async function fetchData(location, routeId, formSubmit, navId) {
+   let origin = window.location.origin;
+   let url = new URL(location.pathname + location.search, origin);
+   url.searchParams.set("_data", routeId);
+   url.searchParams.sort(); // Improves caching
+ 
+-  let init = getFetchInit(formSubmit);
++  let init = getFetchInit(formSubmit, navId);
+   let response = await fetch(url.href, init);
+ 
+   if (isErrorResponse(response)) {
+@@ -43,10 +43,13 @@ async function extractData(response) {
+   return response.text();
+ }
+ 
+-function getFetchInit(formSubmit) {
++function getFetchInit(formSubmit, navId) {
+   if (!formSubmit) {
+     return {
+-      credentials: "same-origin"
++      credentials: "same-origin",
++      headers: {
++        "X-Remix-Navigation-Id": navId
++      }
+     };
+   }
+ 
+@@ -58,7 +61,8 @@ function getFetchInit(formSubmit) {
+     body,
+     credentials: "same-origin",
+     headers: {
+-      "Content-Type": formSubmit.encType
++      "Content-Type": formSubmit.encType,
++      "X-Remix-Navigation-Id": navId
+     }
+   };
+ }

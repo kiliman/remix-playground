@@ -7,7 +7,7 @@ import { getFromCache } from '../../../../utils/cache'
 export let loader: LoaderFunction = async ({ context }) => {
   console.log('context', context)
   const user = await getFromCache(context.cache, 'user', getUser(123))
-  return { grandchild: { name: 'grandchild', user } }
+  return { grandchild: { name: 'grandchild2', user } }
 }
 export default function Grandchild() {
   const data = useRouteData()
@@ -17,7 +17,7 @@ export default function Grandchild() {
         <h4>Grandchild</h4>
         <pre>{JSON.stringify(data, null, 2)}</pre>
       </Json>
-      <Link to="../grandchild2">Grandchild 2</Link>
+      <Link to="../grandchild">Grandchild</Link>
     </>
   )
 }

@@ -63,6 +63,9 @@ export default function Index() {
             Get Parent/Child/Grandchild (JSON type=keyed)
           </a>
         </li>
+        <li>
+          <Link to="parent/child/grandchild">Get Parent/Child/Grandchild</Link>
+        </li>
       </ul>
       <a href="https://github.com/kiliman/remix-multi-app">Get it on GitHub</a>
       <p>Message from the loader: {data.message}</p>
