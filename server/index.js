@@ -24,8 +24,8 @@ const getLoadContext = (req, res) => {
     // no navId, so return one time cache
     return { cache: {} }
   }
-  // navId is guid/length (length = loader count)
-  let [id] = navId.split('/')
+  // navId is id:count (count = loader count)
+  let [id] = navId.split(':')
   let cacheEntry = cacheMap.get(id)
   if (!cacheEntry) {
     cacheEntry = {
@@ -61,11 +61,12 @@ function wrapper(req, res, next) {
   if (!navId) return
   console.log('end', navId)
 
-  let [id, length] = navId.split('/')
+  // navId is id:count (count = loader count)
+  let [id, count] = navId.split(':')
   let cacheEntry = cacheMap.get(id)
   if (cacheEntry) {
     console.log('cache', navId, cacheEntry.count)
-    if (cacheEntry.count === parseInt(length, 10)) {
+    if (cacheEntry.count === parseInt(count, 10)) {
       console.log('purging cache', navId)
       cacheMap.delete(navId)
     }

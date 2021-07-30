@@ -1,12 +1,12 @@
 diff --git a/node_modules/@remix-run/react/browser/components.js b/node_modules/@remix-run/react/browser/components.js
-index a7a7316..81565b8 100644
+index a7a7316..f415844 100644
 --- a/node_modules/@remix-run/react/browser/components.js
 +++ b/node_modules/@remix-run/react/browser/components.js
 @@ -93,6 +93,7 @@ function RemixEntry({
    React.useEffect(() => {
      if (location === nextLocation) return;
      let isCurrent = true;
-+    let navId = Date.now();
++    let navId = btoa(crypto.getRandomValues(new Uint8Array(16)));
  
      (async () => {
        let nextMatches = matchClientRoutes(clientRoutes, nextLocation);
@@ -15,7 +15,7 @@ index a7a7316..81565b8 100644
          }
  
 -        let response = await fetchData(nextLocation, leafRoute.id, pendingFormSubmit);
-+        let response = await fetchData(nextLocation, leafRoute.id, pendingFormSubmit, `${navId}/1`);
++        let response = await fetchData(nextLocation, leafRoute.id, pendingFormSubmit, `${navId}:1`);
  
          if (response instanceof Error) {
            componentDidCatchEmulator.error = response;
@@ -35,7 +35,7 @@ index a7a7316..81565b8 100644
          let route = manifest.routes[routeId]; // get data and module in parallel
  
 -        let [dataResult, routeModule] = await Promise.all([route.hasLoader ? fetchData(nextLocation, route.id) : undefined, loadRouteModule(route, routeModules)]); // don't waste time w/ links for routes that won't render
-+        let [dataResult, routeModule] = await Promise.all([route.hasLoader ? fetchData(nextLocation, route.id, undefined, `${navId}/${fetchCount}`) : undefined, loadRouteModule(route, routeModules)]); // don't waste time w/ links for routes that won't render
++        let [dataResult, routeModule] = await Promise.all([route.hasLoader ? fetchData(nextLocation, route.id, undefined, `${navId}:${fetchCount}`) : undefined, loadRouteModule(route, routeModules)]); // don't waste time w/ links for routes that won't render
  
          if (isRedirectResponse(dataResult) || dataResult instanceof Error || routeModule == null // how?
          ) {
