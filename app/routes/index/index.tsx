@@ -37,15 +37,15 @@ export default function Index() {
           <a href="standalone">Go to standalone</a>
         </li>
         <li>
-          <a href="parent">Get Parent (HTML)</a>
+          <Link to="parent">Get Parent (HTML)</Link>
         </li>
         <li>
-          <a href="parent/child">Get Parent/Child (HTML)</a>
+          <Link to="parent/child">Get Parent/Child (HTML)</Link>
         </li>
         <li>
-          <a href="parent/child/grandchild">
+          <Link to="parent/child/grandchild">
             Get Parent/Child/Grandchild (HTML)
-          </a>
+          </Link>
         </li>
         <li>
           <a href="parent?format=json">Get Parent (JSON)</a>
