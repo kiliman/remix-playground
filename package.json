@@ -4,6 +4,7 @@
   "description": "",
   "license": "",
   "scripts": {
+    "postinstall": "patch-package",
     "clean": "rm -rf ./server/build ./public/build",
     "build": "remix build",
     "dev": "remix dev",
