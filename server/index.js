@@ -30,11 +30,13 @@ const getLoadContext = (req, res) => {
   if (!cacheEntry) {
     cacheEntry = {
       cache: {},
-      count: 0,
+      requests: {},
     }
     cacheMap.set(id, cacheEntry)
   }
-  cacheEntry.count++ // increment hits for auto-cleanup
+  // record if request is finished
+  cacheEntry.requests[req.originalUrl] = false
+
   return {
     cache: cacheEntry.cache,
   }
@@ -65,8 +67,13 @@ function wrapper(req, res, next) {
   let [id, count] = navId.split(':')
   let cacheEntry = cacheMap.get(id)
   if (cacheEntry) {
-    console.log('cache', navId, cacheEntry.count)
-    if (cacheEntry.count === parseInt(count, 10)) {
+    cacheEntry.requests[req.originalUrl] = true // finished
+    console.log('cache', req.originalUrl, cacheEntry.requests)
+    const canPurge =
+      Object.values(cacheEntry.requests).filter(Boolean).length ===
+      parseInt(count, 10)
+
+    if (canPurge) {
       console.log('purging cache', navId)
       cacheMap.delete(navId)
     }
