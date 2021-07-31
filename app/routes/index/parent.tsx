@@ -12,7 +12,7 @@ export let handle = {
 
 export let loader: LoaderFunction = async ({ request, context }) => {
   console.log(request.url, context)
-  const user = await getFromCache(context.cache, 'user', getUser(123))
+  const user = await getFromCache(context.cache, 'user', () => getUser(123))
   await delay(1000)
   return { parent: { name: 'parent', user } }
 }

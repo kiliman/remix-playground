@@ -6,7 +6,7 @@ import { getFromCache } from '../../../../utils/cache'
 
 export let loader: LoaderFunction = async ({ context }) => {
   console.log('context', context)
-  const user = await getFromCache(context.cache, 'user', getUser(123))
+  const user = await getFromCache(context.cache, 'user', () => getUser(123))
   return { grandchild: { name: 'grandchild', user } }
 }
 export default function Grandchild() {
