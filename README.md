@@ -2,7 +2,7 @@
 
 A test project to show different features/hacks using Remix
 
-[View Demo](https://remix-multi-app.herokuapp.com/)
+[View Demo](https://remix-playground.herokuapp.com/)
 
 ## X-Remix-Navigation-Id
 
