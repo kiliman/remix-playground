@@ -1,6 +1,42 @@
-# Remix multi-app
+# Remix Playground
+
+A test project to show different features/hacks using Remix
 
 [View Demo](https://remix-multi-app.herokuapp.com/)
+
+## X-Remix-Navigation-Id
+
+This project patches Remix loader requests to include the `X-Remix-Navigation-Id`
+header so parallel requests can be logically grouped together. This is useful for
+a shared cache or session access.
+
+The cache is initialized in your provider `getLoadContext()`. You then access the
+cache from your loader using:
+
+```ts
+const data = await getFromCache(context.cache, key, () => getUser(123))
+```
+
+The cache stores the promise and returns it to all loaders using the same key. This
+way the async call is only made once and all loaders await the same promise.
+
+You can also use this for session management.
+
+```ts
+const session = await getSessionFromCache(context.cache, request)
+const value = session.get(key)
+session.set(key, value)
+
+// flash (recommend using different key per child route)
+session.flash('flash:grandchild', message)
+session.flash('flash:child', message)
+session.flash('flash:parent', message)
+```
+
+By using a shared session, this prevents the session from getting out of sync
+from parallel loaders updating the same values.
+
+## Multi-app layout
 
 This project shows how to mount multiple "apps" in a single instance.
 

@@ -5,11 +5,8 @@ export function getFromCache(
 ) {
   let promise = cache[key]
   if (!promise) {
-    promise = new Promise((resolve, reject) =>
-      getter().then(resolve).catch(reject),
-    )
+    promise = getter()
     cache[key] = promise
-    return promise
   }
   return promise
 }

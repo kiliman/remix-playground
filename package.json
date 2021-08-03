@@ -6,8 +6,8 @@
   "scripts": {
     "postinstall": "patch-package",
     "clean": "rm -rf ./server/build ./public/build",
-    "build": "remix build",
-    "dev": "remix dev",
+    "build": "npm run clean && remix build",
+    "dev": "npm run clean && remix dev",
     "start": "NODE_ENV=production node server/index.js",
     "start:dev": "NODE_ENV=development node server/index.js"
   },

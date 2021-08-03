@@ -21,16 +21,18 @@ export default function Index() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h2>Welcome to Default/Index App!</h2>
-      <p>
-        <a href="https://remix.run/dashboard/docs">Check out the docs</a> to get
-        started.
-      </p>
+      <h2>Welcome to Remix Playground</h2>
+      <p>This test project shows different features/hacks using Remix</p>
 
-      <h3>Show X-Remix-Navigation-Id header support</h3>
+      <h3>X-Remix-Navigation-Id header</h3>
       <p>
         You should see the header in the Network tab for 3 loader call. Then
         click on the Grandchild2 link to see child navigation.
+      </p>
+      <p>
+        This shows how to use a shared cached across parallel requests. This
+        also shows how to use a shared session object to prevent race conditions
+        when accessing and updating session values.
       </p>
       <Link to="parent/child/grandchild">Get Parent/Child/Grandchild</Link>
       <h3>Multi-App and JSON support</h3>
@@ -71,11 +73,8 @@ export default function Index() {
             Get Parent/Child/Grandchild (JSON type=keyed)
           </a>
         </li>
-        <li>
-          <Link to="parent/child/grandchild">Get Parent/Child/Grandchild</Link>
-        </li>
       </ul>
-      <a href="https://github.com/kiliman/remix-multi-app">Get it on GitHub</a>
+      <a href="https://github.com/kiliman/remix-playground">Get it on GitHub</a>
       <p>Message from the loader: {data.message}</p>
     </div>
   )
